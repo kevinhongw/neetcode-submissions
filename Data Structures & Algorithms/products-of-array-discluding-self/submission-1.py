@@ -1,0 +1,27 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        product = 1
+        zero_count = 0
+
+        # get full product (besides 0)
+        for num in nums:
+            if num:
+                product = product * num
+            else:
+                zero_count += 1
+        
+        # if two zero, then ALL product will be 0s
+        if zero_count > 1:
+            return [0] * len(nums)
+
+        result = [0] * len(nums)
+        for i, num in enumerate(nums):
+            # only the element that's not zero will have the full non zero product
+            # otherwise, all zero
+            if zero_count > 0:
+                result[i] = 0 if num != 0 else product
+            else:
+                result[i] = product // num
+
+        return result
+        
